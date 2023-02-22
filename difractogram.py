@@ -2,8 +2,13 @@
 """
 Created on Tue Feb 21
 
-@author: Iván
+@author: Iván Villegas Pérez
 """
+
+'''
+This program reads the data from a certain file, plots the difractogram and prints the values of
+two times the angle at which each peak is, the sine square, and the normalization to the first peak.
+'''
 
 import numpy as np
 
@@ -11,13 +16,17 @@ from typing import List
 
 import matplotlib.pyplot as plt
 
-with  open("M1-0001.x_y", "r") as infile:
+#Read the data from a given file
+
+with  open("M1-0001.x_y", "r") as infile: #Change the name for a different file.
     
     lines = infile.readlines()
         
     angle: List[str] = []
 
     intensity: List[float] = []
+        
+    #You might need to create more lists if you have more peaks. Or delete some if you have less.
     
     peak1_a: List[float] = []
     
@@ -50,6 +59,8 @@ with  open("M1-0001.x_y", "r") as infile:
         angle.append(float(vals[0]))
         
         intensity.append(float(vals[1]))
+        
+        #You might have to change the values for a different file.
 
         if float(vals[0]) >= 27 and float(vals[0]) <= 30:
             
@@ -89,7 +100,11 @@ with  open("M1-0001.x_y", "r") as infile:
 
 #%%
 
+#Make the difractogram.
+
 plt.figure()
+
+#The text of the figure is in Spanish because I have to present the report in this lenguage.
 
 plt.plot(angle, intensity, color='red')
 
@@ -107,9 +122,20 @@ plt.savefig('difractograma M1-0001.pdf')
 
 def index_max(intensity_peak: List[float]) -> int:
     
+    '''
+    This function computes the iondex of the highest element in a given list.
+    
+    Parameters:
+        -intensity_peak: list of intensities in a short angular range; the list should have the name peakj_i, where j is a number.
+    Returns:
+        -index: index at which the maximum element of the given list is located.
+    '''
+    
     index: int = intensity_peak.index(max(intensity_peak))
     
     return index
+
+#Print the values needed for the indexation.
 
 print(f'\nFirst peak angle is 2θ = {peak1_a[index_max(peak1_i)]}.\n')
 
